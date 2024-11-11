@@ -86,8 +86,7 @@
     },
     setup(props) {
       const route = useRoute()
-  
-      // Get the cardData from the route state or use default
+
       const cardData = route.state?.cardData || props.cardData
   
   
