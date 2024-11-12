@@ -40,31 +40,32 @@
   .orientation-section {
     background: white;
   }
+
+  .orientation-section h2 {
+    font-weight: 700;
+  }
   
   .orientation-options {
+
     display: flex;
-    gap: 20px;
-    margin-top: 15px;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    /* align-content: center; */
-    justify-content: space-between;
+    justify-self: center;
     align-items: center;
+    gap: 20px;
+    margin-top: 10px;
+    margin-bottom: 11px;
   }
   
   .orientation-option {
+
     display: flex;
-    /* flex-direction: column; */
+    justify-self: center;
     align-items: center;
     gap: 10px;
     cursor: pointer;
+    transition: all .5s ease-in-out;
+    width: 100%;
+    height: 100%;
     padding: 10px;
-    border-radius: 6px;
-    transition: all 0.3s ease;
-    width: 50%;
-    flex-wrap: nowrap;
-    /* align-content: center; */
-    justify-content: center;
   }
   
   .orientation-option:hover {
@@ -72,7 +73,9 @@
   }
   
   .orientation-option.active {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 5px 24px 0 rgba(0, 0, 0, 0.19)
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 5px #0004;
   }
   
   .preview-box {
@@ -83,13 +86,13 @@
   .preview-box.horizontal {
     width: 60px;
     height: 40px;
-    background: #ff69b4;
+    background-color: #fb4aff;
   }
   
   .preview-box.vertical {
     width: 40px;
     height: 60px;
-    background: #ffa500;
+    background-color: #fcaa30;
   }
   </style>
 

@@ -1,5 +1,6 @@
-<!-- src/views/CreateCard.vue -->
+<!-- src/views/CreateCard.vue  composant principal de création des cartes-->
 <template>
+  <section class="card-section">
     <div class="create-card-container">
       <div class="left-section">
         <CardOrientation
@@ -22,6 +23,7 @@
         />
       </div>
     </div>
+  </section>
   </template>
   
   <script>
@@ -92,46 +94,50 @@
   
   
   <style scoped>
-  .create-card-container {
+
+  .card-section {
+    width: 100%;
+    height: 100vh;
     display: flex;
-    background-color: #f5f5f5;
-    border-radius: 5px;
-    box-shadow: 8px 8px 55px #00000080;
-    height: 600px;
-    width: 90%;
-    align-items: stretch;
+    justify-content: center;
+    align-items: center;
+    background-color: #eee;
+  }
+
+
+  .create-card-container {
+    width: 80%;
+    height: 80%;
+    display: flex;
     justify-content: space-evenly;
-    align-content: center;
-    flex-wrap: nowrap;
-    flex-direction: row;
+    align-items: center;
     margin: auto;
+    background-color: #fff
+
   }
   
   .left-section {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    overflow: scroll;
-
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: 40%;
+    height: 80vh;
+    overflow: auto;
+    border-radius: 5px;
+    box-shadow: 8px 8px 55px #00000080;
+    padding: 30px;
   }
   
   .right-section {
-    flex: 1;
-    position: sticky;
-    top: 20px;
+    width: 60%;
+    height: 80vh;
+    background: url(/src/backcard.82a6598a.jpg), rgba(0, 0, 0, .3);
     background-blend-mode: darken;
     object-fit: cover;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    gap: 50px;
     transition: flex-direction .5s ease-in-out;
     user-select: none;
-    background-color: rgba(0,0,0,.3);
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
   }
   
   @media (max-width: 768px) {

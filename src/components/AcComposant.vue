@@ -33,81 +33,91 @@ export default {
   
   <style scoped>
   .welcome-container {
+    width: 100%;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f5f5f5;
-    padding: 20px;
+    background-color: #eee;
+    background-blend-mode: darken;
     position: relative;
-    overflow: hidden;
   }
+
+  @media screen and (max-width: 993px) {
+    .card {
+        width: 90%;
+        height: 90%;
+    }
+}
   
   .half-circle {
 
     position: absolute;
-  width: 62%;
-  height: 26%;
-  border-radius: 100% 100% 100% 100%;
-  overflow: visible;
-  pointer-events: none;
+    width: 45%;
+    border-radius: 100% 100% 100% 100%;
+    pointer-events: none;
+
+    height: 45%;
+    border-radius: 50%;
+    content: "";
   }
   
   .top-pink {
-    background-color: #ff69b4;
     top: 5%;
+    background-color: #fb4aff;
     left: 50%;
     transform: translateX(-50%);
   }
   
   .bottom-orange {
-    background-color: #ffa500;
-    bottom: 5%;
     left: 50%;
     transform: translateX(-50%) rotate(180deg);
+    bottom: 5%;
+    background-color: #fcaa30;
   }
   
   .card {
-    background-color: #000051;
-    border-radius: 20px;
-    padding: 40px;
     text-align: center;
-    width: 80%;
-    height: 70%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: relative;
-    z-index: 1;
-    justify-content: center;
-    /* justify-self: center; */
+
+    width: 60%;
+    height: 60%;
+    background-color: #004;
+    color: #fff;
+    padding: 20px;
+    border-radius: 18px;
+    box-shadow: 0 0 30px #0004;
     display: flex;
     flex-direction: column;
-    flex-wrap: nowrap;
-    /* align-content: space-around; */
+    justify-content: center;
     align-items: center;
+    z-index: 5;
   }
   
   .title {
     color: white;
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    font-weight: bold;
+    font-weight: 700;
   }
   
   .subtitle {
     color: white;
     font-size: 1.1rem;
-    margin-bottom: 2rem;
   }
   
   .create-button {
-    background-color: white;
-    color: #000051;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 8px;
     font-size: 1rem;
+    background-color: #fff;
+    color: #004;
+    margin: 20px 0;
+
+
     cursor: pointer;
-    transition: transform 0.2s ease;
+    background-color: #fff;
+    border: 1px solid white;
+    border-radius: 8px;
+    padding: 10px 15px;
+    transition: .3s;
   }
   
   .create-button:hover {

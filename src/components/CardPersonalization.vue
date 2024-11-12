@@ -1,4 +1,4 @@
-<!-- src/components/CardPersonalization.vue -->
+<!-- src/components/CardPersonalization.vue composant de personnalisation de la carte-->
 <template>
     <div class="personalization-section">
       <h2>Personnaliser votre carte (recto)</h2>
@@ -33,7 +33,7 @@
       </div>
   
       <div class="logo-size-section">
-        <h3>Ajuster la taille du logo</h3>
+        <label>Ajuster la taille du logo</label>
         <input 
           type="range"
           min="20"
@@ -110,51 +110,78 @@
         </div>
   
         <div class="input-group">
-            <button @click="showPreview" class="preview-button">
-            Afficher le preview
-            </button>
-        </div>
+      <button @click="showPreview" class="preview-button">
+        Preview
+      </button>
+    </div>
     </div>
 </div>
   </template>
   
-  <script>
+  <script setup>
+  import { useRouter } from 'vue-router'
   import CardPreview from './CardPreview.vue'
+  import CardView from './CardView.vue';
   
-  export default {
-    name: 'CardPersonalization',
-    components: {
-      CardPreview
-    },
-    props: {
-      cardData: {
-        type: Object,
-        required: true
-      }
-    },
-    methods: {
-      handleLogoUpload(event) {
-        const file = event.target.files[0]
-        if (file) {
-          const reader = new FileReader()
-          reader.onload = (e) => {
-            this.$emit('update:logo', e.target.result)
-          }
-          reader.readAsDataURL(file)
-        }
-      },
-      updateText(field, value) {
-        this.$emit('update:textContent', field, value)
-      },
-      updateStyle(side, property, value) {
-        this.$emit('update:styles', side, property, value)
-      },
-
-      showPreview() {
-  this.$router.push({ name: 'CardPreview', state: { cardData: this.cardData } });
-}
-
+  
+  // Définir les props
+  const props = defineProps({
+    cardData: {
+      type: Object,
+      required: true
     }
+  })
+  
+  // Définir les emits au niveau supérieur
+  const emit = defineEmits([
+    'update:textContent',
+    'update:styles',
+    'update:logo',
+    'update:logoSize',
+    'update:qrInfo'
+  ])
+  
+  const router = useRouter()
+  
+  const showPreview = () => {
+    try {
+      const cardDataCopy = JSON.parse(JSON.stringify(props.cardData))
+      router.push({
+        name: 'CardView',
+        query: {
+          cardData: JSON.stringify(cardDataCopy)
+        }
+      })
+    } catch (error) {
+      console.error('Erreur lors de la navigation vers le preview:', error)
+    }
+  }
+  
+  const handleLogoUpload = (event) => {
+    const file = event.target.files[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        emit('update:logo', e.target.result)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+  
+  const updateText = (field, value) => {
+    emit('update:textContent', field, value)
+  }
+  
+  const updateStyle = (side, property, value) => {
+    emit('update:styles', side, property, value)
+  }
+  
+  const updateLogoSize = (event) => {
+    emit('update:logoSize', parseInt(event.target.value))
+  }
+  
+  const updateQrInfo = (event) => {
+    emit('update:qrInfo', event.target.value)
   }
   </script>
   
@@ -169,44 +196,42 @@
     margin-top: 20px;
   }
   
-  .input-group {
-    margin: 10px 0;
+  .input-group,   .input-color {
+    margin: 20px 0;
   }
   
   input[type="text"] {
     width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    height: 40px;
+    border: 1px solid #858C94;
+    border-radius: 8px;
+    padding: 5px 8px;
   }
   
   input[type="range"] {
     width: 100%;
     margin: 10px 0;
   }
-  
-  
-  .input-color {
-    margin: 10px 0;
-  }
 
   input[type="color"] {
     width: 100%;
-    padding: 5px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
     height: 40px;
+    border: 1px solid #858C94;
+    border-radius: 8px;
+    padding: 5px 8px;
   }
   
   .preview-button {
-    background: #4a90e2;
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.3s;
     width: 100%;
+
+    background-color: #007;
+    color: #fff;
+
+    cursor: pointer;
+    border: 1px solid white;
+    border-radius: 8px;
+    padding: 10px 15px;
+    transition: .3s;
   }
   
   .preview-button:hover {
@@ -214,20 +239,15 @@
   }
   
   h2 {
-    color: #333;
-    margin-bottom: 15px;
+    font-weight: 700;
   }
   
   h3 {
-    margin-bottom: 10px;
-    font-size: 1rem;
-    color: #666;
+    font-weight: 700;
   }
   
   label {
-    display: block;
-    margin-bottom: 5px;
-    color: #666;
+    font-weight: 700;
   }
   </style>
   

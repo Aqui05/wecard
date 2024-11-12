@@ -22,11 +22,19 @@ const router = createRouter({
       name: 'CardPreview',
       component: CardPreview
     },
-    { path: '/export',
+    {
+      path: '/export',
+      name: 'CardView',
+      component: CardView,
+      props: (route) => ({
+        cardData: route.query.cardData ? JSON.parse(route.query.cardData) : undefined
+      })
+    },
+    /*{ path: '/export',
       name: 'CardView',
       component: CardView,
       props: true
-    }
+    }*/
   ],
 })
 

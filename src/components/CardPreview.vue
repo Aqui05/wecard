@@ -1,4 +1,4 @@
-<!-- src/components/CardPreview.vue -->
+<!-- src/components/CardPreview.vue composant de preview de la carte-->
 <template>
     <div class="preview-section">
       <div
@@ -14,13 +14,17 @@
             color: cardData.rectoStyles.textColor
           }"
         >
-          <div class="logo-section" v-if="cardData.logo || defaultLogo">
-            <img
-              :src="cardData.logo || defaultLogo"
-              :style="{ maxWidth: cardData.logoSize + '%' }"
-              alt="Logo"
-            />
-          </div>
+        <div class="logo-section" v-if="cardData.logo || defaultLogo">
+    <img
+      :src="cardData.logo || defaultLogo"
+      :style="{
+        width: `${calculateLogoWidth()}px`,
+        minWidth: '50px',
+        maxWidth: '200px'
+      }"
+      alt="Logo"
+    />
+  </div>
           <div class="text-content">
             <div class="name"><span>Nom: </span> {{ cardData.textContent.nom || 'DEVER' }}</div>
             <div class="firstname"><span>Prénoms: </span>{{ cardData.textContent.prenoms || 'Luap' }}</div>
@@ -37,67 +41,89 @@
             color: cardData.versoStyles.textColor
           }"
         >
+        <div class="verso-content">
           <div class="qr-code">
-            <div class="qr-placeholder"></div>
+            <img class="qr-placeholder" src="../qr.png" alt="qr">
             <div class="qr-info" v-if="cardData.qrInfo">{{ cardData.qrInfo }}</div>
           </div>
           <div class="wecard-branding">
             <div class="txt">
               WeCard <span class="pro-badge">Pro</span>
             </div>
-            <img style="width: 20px;" src="../wifi.png" alt="wifi">
+            <img style="width: 10px;" src="../wifi.png" alt="wifi">
           </div>
+        </div>
         </div>
       </div>
     </div>
   </template>
   
   <script>
-  import { useRoute } from 'vue-router'
-  import defaultLogo from '@/assets/dlogo.jpg';
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+import defaultLogo from '@/assets/dlogo.jpg'
 
-  
-  export default {
-    name: 'CardPreview',
-    props: {
-      cardData: {
-        type: Object,
-        required: false,
-        default: () => ({
-          orientation: 'horizontal',
-          logo: null,
-          logoSize: 50,
-          textContent: {
-            nom: '',
-            prenoms: '',
-            titre: ''
-          },
-          rectoStyles: {
-            backgroundColor: '#ffffff',
-            textColor: '#000000'
-          },
-          versoStyles: {
-            backgroundColor: '#000051',
-            textColor: '#ffffff'
-          },
-          qrInfo: ''
-        })
-      }
-    },
-    setup(props) {
-      const route = useRoute()
+export default {
+  name: 'CardPreview',
+  props: {
+    cardData: {
+      type: Object,
+      required: false,
+      default: () => ({
+        orientation: 'horizontal',
+        logo: null,
+        logoSize: 50,
+        textContent: {
+          nom: '',
+          prenoms: '',
+          titre: ''
+        },
+        rectoStyles: {
+          backgroundColor: '#ffffff',
+          textColor: '#000000'
+        },
+        versoStyles: {
+          backgroundColor: '#000051',
+          textColor: '#ffffff'
+        },
+        qrInfo: ''
+      })
+    }
+  },
+  setup(props) {
+    const route = useRoute()
 
-      const cardData = route.state?.cardData || props.cardData
-  
-  
-      return {
-        cardData,
-        defaultLogo
+    // Fonction pour calculer la largeur du logo basée sur sa taille
+    const calculateLogoWidth = () => {
+      const baseWidth = 150
+      const scale = props.cardData.logoSize / 100
+      const width = baseWidth * scale
+      // Garantir que la valeur reste entre 50 et 200px
+      return Math.min(Math.max(width, 50), 200)
+    }
+
+    // Propriété calculée pour déterminer les données de prévisualisation
+    const previewData = computed(() => {
+      try {
+        if (route.query.cardData) {
+          return JSON.parse(route.query.cardData)
+        }
+        return props.cardData
+      } catch (error) {
+        console.error('Erreur lors du parsing des données:', error)
+        return props.cardData
       }
+    })
+
+    return {
+      cardData: previewData,
+      defaultLogo,
+      calculateLogoWidth
     }
   }
-  </script>
-  
+}
+</script>
+
 
 
   <style scoped>
@@ -109,20 +135,28 @@
   
   .preview-cards {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
   }
 
   .preview-cards.horizontal {
-    gap: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    transition: flex-direction .5s ease-in-out;
+    user-select: none;
   }
 
   .preview-cards.vertical {
-    gap: 20px;
-    height: 30pc;
-    top: 4pc;
-    position: relative;
-    margin: auto;
+    background-blend-mode: darken;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    transition: flex-direction .5s ease-in-out;
+    user-select: none;
   }
   
   .card-preview {
@@ -133,26 +167,60 @@
     transition: all 0.3s ease;
   }
   
-  .card-preview.horizontal {
-    width: 95%;
-    height: 260px;
-  }
-  
-  .card-preview.vertical {
-    width: 200px;
-  }
 
   /* modifie ce code pour mettre le gap de preview-card à 10px quand card-preview est à vertical */
   
-  .card-preview.recto {
-    display: flex;
+  .card-preview.recto.horizontal {
     flex-direction: column;
+    justify-content: space-around;
+    align-items: stretch;
+    color: #000;
+    padding: 20px 10px;
+    width: 90%;
+    height: 250px;
+    color: rgb(0, 0, 0);
+    display: flex;
+  }
+
+  .card-preview.recto.vertical{
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: stretch;
+    color: #000;
+    padding: 20px 10px;
+    width: 50%;
+    height: 400px;
+    color: rgb(0, 0, 0);
+    display: flex;
   }
   
-  .card-preview.verso {
-    display: flex;
+  .card-preview.verso.vertical {
+    width: 50%;
+    height: 400px;
+    color: rgb(255, 255, 255);
     flex-direction: column;
-    justify-content: center;
+    padding: 20px 10px 5px;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 30px;
+    color: #fff;
+    display: flex;
+  }
+  
+  .card-preview.verso.horizontal {
+    padding: 20px 10px 5px;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 30px;
+    color: #fff;
+    display: flex;
+
+    width: 90%;
+    height: 250px;
+    color: rgb(255, 255, 255);
+    flex-direction: column;
   }
   
   .logo-section {
@@ -164,6 +232,19 @@
   .logo-section img {
     max-height: 60px;
     object-fit: contain;
+  }
+
+  .verso-content {
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
+    justify-content: space-evenly;
+    align-items: stretch;
+    bottom: -30%;
+  }
+
+  .qr-code {
+    display: flex;
   }
   
   .qr-placeholder {
@@ -189,22 +270,25 @@
     margin-top: 20px;
     /* align-content: center; */
     justify-content: space-between;
-    bottom: -19%;
+    gap: 50px;
     position: relative;
   }
   
   .pro-badge {
-    background: rgba(255, 255, 255, 0.2);
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 0.8rem;
+    background-color: #fff;
+    color: #000;
+    padding: 2px 5px;
+    border-radius: 5px;
+    font-size: .5em;
   }
   
   .text-content {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    top: 50px;
+    left: 50px;
+    justify-content: flex-end;
   }
 
   .text-content span {
