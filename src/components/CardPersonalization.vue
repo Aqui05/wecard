@@ -180,6 +180,7 @@
     emit('update:logoSize', parseInt(event.target.value))
   }
   
+  
   const updateQrInfo = (event) => {
     emit('update:qrInfo', event.target.value)
   }
@@ -220,6 +221,10 @@
     border-radius: 8px;
     padding: 5px 8px;
   }
+
+  ::-webkit-scrollbar {
+  display: none;
+}
   
   .preview-button {
     width: 100%;
@@ -240,14 +245,17 @@
   
   h2 {
     font-weight: 700;
+    color: black
   }
   
   h3 {
     font-weight: 700;
+    color: black
   }
   
   label {
     font-weight: 700;
+    color: black
   }
   </style>
   

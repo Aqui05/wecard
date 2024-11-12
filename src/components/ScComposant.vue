@@ -95,6 +95,17 @@
   
   <style scoped>
 
+::-webkit-scrollbar {
+  display: none;
+}
+
+@media screen and (max-width: 993px) {
+    .card-section {
+        height: auto;
+        margin: 5% 0;
+    }
+}
+
   .card-section {
     width: 100%;
     height: 100vh;
@@ -122,7 +133,7 @@
     overflow: auto;
     border-radius: 5px;
     box-shadow: 8px 8px 55px #00000080;
-    padding: 30px;
+    padding: 20px;
   }
   
   .right-section {

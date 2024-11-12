@@ -41,8 +41,17 @@
     background: white;
   }
 
+  ::-webkit-scrollbar {
+  display: none;
+}
+
   .orientation-section h2 {
     font-weight: 700;
+    color: black
+  }
+
+  .orientation-option span {
+    color: black
   }
   
   .orientation-options {

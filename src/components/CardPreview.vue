@@ -143,7 +143,7 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 50px;
+    gap: 20px;
     transition: flex-direction .5s ease-in-out;
     user-select: none;
   }
@@ -180,6 +180,7 @@ export default {
     height: 250px;
     color: rgb(0, 0, 0);
     display: flex;
+    justify-content: space-between;
   }
 
   .card-preview.recto.vertical{
@@ -192,6 +193,7 @@ export default {
     height: 400px;
     color: rgb(0, 0, 0);
     display: flex;
+    justify-content: space-between;
   }
   
   .card-preview.verso.vertical {
@@ -230,8 +232,8 @@ export default {
   }
   
   .logo-section img {
-    max-height: 60px;
-    object-fit: contain;
+    max-height: 200px;
+    object-fit: cover;
   }
 
   .verso-content {
@@ -240,7 +242,7 @@ export default {
     align-content: stretch;
     justify-content: space-evenly;
     align-items: stretch;
-    bottom: -30%;
+    width: 100%;
   }
 
   .qr-code {
@@ -263,37 +265,42 @@ export default {
   }
   
   .wecard-branding {
-    font-size: 1.2rem;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin-top: 20px;
-    /* align-content: center; */
-    justify-content: space-between;
-    gap: 50px;
-    position: relative;
-  }
-  
-  .pro-badge {
-    background-color: #fff;
-    color: #000;
-    padding: 2px 5px;
-    border-radius: 5px;
-    font-size: .5em;
-  }
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  gap: 50px;
+  position: relative;
+}
+
+.pro-badge {
+  background-color: #fff;
+  color: #000;
+  padding: 2px 5px;
+  border-radius: 5px;
+  font-size: 0.5em;
+  top: -8px;
+  position: relative;
+}
   
   .text-content {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    top: 50px;
+    bottom: 5%;
     left: 50px;
     justify-content: flex-end;
+    position: absolute;
   }
 
   .text-content span {
     font-weight: bold;
   }
+
+  ::-webkit-scrollbar {
+  display: none;
+}
   
   
   .firstname,

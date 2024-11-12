@@ -158,7 +158,7 @@ setup(props) {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 50px;
+  gap: 20px;
   transition: flex-direction .5s ease-in-out;
   user-select: none;
 }
@@ -169,7 +169,7 @@ setup(props) {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 50px;
+  gap: 30px;
   transition: flex-direction .5s ease-in-out;
   user-select: none;
 }
@@ -245,7 +245,7 @@ setup(props) {
 }
 
 .logo-section img {
-  max-height: 60px;
+  max-height: 150px;
   object-fit: contain;
 }
 
@@ -255,7 +255,11 @@ setup(props) {
   align-content: stretch;
   justify-content: space-evenly;
   align-items: stretch;
-  bottom: -30%;
+  width: 100%;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 .qr-code {
@@ -295,7 +299,11 @@ setup(props) {
   padding: 2px 5px;
   border-radius: 5px;
   font-size: .5em;
+  top: -8px;
+  position: relative;
 }
+
+/* Afficher les deux éléments de part et d'autres de l'espace disponibe */
 
 .text-content {
   flex-grow: 1;
@@ -304,6 +312,7 @@ setup(props) {
   top: 50px;
   left: 50px;
   justify-content: flex-end;
+  position: static;
 }
 
 .text-content span {
@@ -316,10 +325,10 @@ setup(props) {
   margin-top: 5px;
 }
 
-@media (max-width: 768px) {
+/*@media (max-width: 768px) {
   .preview-cards {
     flex-direction: column;
     align-items: center;
   }
-}
+}*/
 </style>
